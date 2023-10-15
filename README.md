@@ -1,5 +1,8 @@
 # TSID-TS
 
+[![Node.js CI](https://github.com/yubinTW/tsid-ts/actions/workflows/node.js.yml/badge.svg)](https://github.com/yubinTW/tsid-ts/actions/workflows/node.js.yml)
+[![NPM version](https://img.shields.io/npm/v/tsid-ts.svg?style=flat)](https://www.npmjs.com/package/tsid-ts)
+
 A JavaScript/TypeScript library for generating Time-Sorted Unique Identifiers (TSID).
 
 This library is a TypeScript implementation of [tsid-creator](https://github.com/f4b6a3/tsid-creator)
