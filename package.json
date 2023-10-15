@@ -1,0 +1,46 @@
+{
+  "name": "tsid-ts",
+  "author": "Yubin, Hsu",
+  "version": "0.0.5",
+  "main": "dist/index",
+  "keywords": [
+    "tsid",
+    "Time-Sorted Unique Identifiers",
+    "TypeScript"
+  ],
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "description": "A TypeScript library for generating Time-Sorted Unique Identifiers (TSID).",
+  "license": "MIT",
+  "homepage": "https://github.com/yubinTW/tsid-ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yubinTW/tsid-ts"
+  },
+  "bugs": {
+    "url": "https://github.com/yubinTW/tsid-ts/issues"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "fix-prettier": "prettier --write \"{src,test}/**/*.{ts,json}\"",
+    "check-lint": "eslint --color package.json \"{src,test}/**/*.ts\"",
+    "fix-lint": "eslint --fix \"{src,test}/**/*.ts\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.5",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "@vitest/coverage-v8": "^0.34.6",
+    "@vitest/ui": "^0.34.6",
+    "eslint": "^8.51.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
+  },
+  "dependencies": {}
+}
