@@ -1,3 +1,4 @@
+import fc from 'fast-check'
 import { describe, expect, test } from 'vitest'
 
 import { getTsid, TSID } from '../src'
@@ -32,5 +33,33 @@ describe('TSID Testing', () => {
     const tsidArray: Array<TSID> = Array.from({ length: 100_000 }, () => getTsid())
     const tsidSet = new Set(tsidArray)
     expect(tsidSet).toHaveLength(100_000)
+  })
+
+  describe('Property-based Testing', () => {
+    test('For any size TSID array, first item should small than the second one', () => {
+      fc.assert(
+        fc.property(fc.integer({ min: 2, max: 10_000 }), (size) => {
+          const arr: Array<TSID> = Array.from({ length: size }, () => getTsid())
+          expect(arr[0].toBigInt()).toBeLessThan(arr[1].toBigInt())
+        })
+      )
+    })
+    test('For any size TSID array, last item should bigger than the last second one', () => {
+      fc.assert(
+        fc.property(fc.integer({ min: 2, max: 10_000 }), (size) => {
+          const arr: Array<TSID> = Array.from({ length: size }, () => getTsid())
+          expect(arr.pop()?.toBigInt()).toBeGreaterThan(arr[0].toBigInt())
+        })
+      )
+    })
+    test('For any size TSID array, each item should be unique', () => {
+      fc.assert(
+        fc.property(fc.integer({ min: 2, max: 10_000 }), (size) => {
+          const tsidArr: Array<TSID> = Array.from({ length: size }, () => getTsid())
+          const tsidSet: Set<TSID> = new Set(tsidArr)
+          expect(tsidArr).toHaveLength(tsidSet.size)
+        })
+      )
+    })
   })
 })
