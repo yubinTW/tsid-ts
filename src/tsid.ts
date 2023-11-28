@@ -30,6 +30,10 @@ _setAlphabetValues('l', 1)
 
 type StringFormat = 's' | 'S' | 'x' | 'X' | 'd' | 'z'
 
+/**
+ * Returns a new TSID.
+ * @returns TSID
+ */
 export const getTsid: () => TSID = () => TSID.create()
 
 export class TSID {
