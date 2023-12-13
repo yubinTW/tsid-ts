@@ -1,6 +1,13 @@
 // Base 62
 const ALPHABET: string = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
+/**
+ * Encodes a bigint value into a string representation using the specified base.
+ * @param value - The bigint value to encode.
+ * @param base - The base to use for encoding.
+ * @param minLength - The minimum length of the encoded string. Optional.
+ * @returns The encoded string.
+ */
 export function encode(value: bigint, base: number, minLength?: number): string {
   const result: Array<string> = []
 
@@ -16,6 +23,12 @@ export function encode(value: bigint, base: number, minLength?: number): string 
   return result.reverse().join('')
 }
 
+/**
+ * Decodes a string value into a number using the specified base.
+ * @param value The string value to decode.
+ * @param base The base to use for decoding.
+ * @returns The decoded number.
+ */
 export function decode(value: string, base: number): number {
   let result: number = 0
 
