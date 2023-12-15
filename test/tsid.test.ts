@@ -3,6 +3,9 @@ import { describe, expect, test } from 'vitest'
 
 import { getTsid, TSID } from '../src'
 
+const TSID_BYTES_LENGTH = 8
+const RANDOM_MASK = 0x3fffff
+
 describe('TSID Testing', () => {
   test('TSID Can be stored as a bigint', () => {
     const tsid = getTsid()
@@ -33,6 +36,63 @@ describe('TSID Testing', () => {
     const tsidArray: Array<TSID> = Array.from({ length: 100_000 }, () => getTsid())
     const tsidSet = new Set(tsidArray)
     expect(tsidSet).toHaveLength(100_000)
+  })
+
+  test('TSID number should be a bigint', () => {
+    const tsid = getTsid()
+    expect(tsid.number).toBeTypeOf('bigint')
+  })
+
+  test('TSID timestamp should be close to the current time', () => {
+    const tsid = getTsid()
+    const currentTime = Date.now()
+    const timestamp = tsid.timestamp
+    expect(timestamp - currentTime).toBeLessThan(1000)
+  })
+
+  test('TSID random component should be within the valid range', () => {
+    const tsid = getTsid()
+    const random = tsid.random
+    expect(random).toBeGreaterThanOrEqual(0)
+    expect(random).toBeLessThanOrEqual(RANDOM_MASK)
+  })
+
+  test('TSID toBytes should return a Uint8Array with the correct length', () => {
+    const tsid = getTsid()
+    const bytes = tsid.toBytes()
+    expect(bytes).toBeInstanceOf(Uint8Array)
+    expect(bytes).toHaveLength(TSID_BYTES_LENGTH)
+  })
+
+  test('TSID toString should return a 13-character canonical string', () => {
+    const tsid = getTsid()
+    const str = tsid.toString()
+    expect(str).toHaveLength(13)
+  })
+
+  test('TSID toStringWithFormat should return the expected string format', () => {
+    const tsid = getTsid()
+    const canonicalString = tsid.toStringWithFormat('S')
+    const hexString = tsid.toStringWithFormat('X')
+    const decimalString = tsid.toStringWithFormat('d')
+    const base62String = tsid.toStringWithFormat('z')
+
+    expect(canonicalString).toHaveLength(13)
+    expect(hexString).toMatch(/^[0-9A-F]+$/)
+    expect(decimalString).toMatch(/^\d+$/)
+    expect(base62String).toMatch(/^[0-9A-Za-z]+$/)
+  })
+
+  test('TSID fromBytes should create a TSID with the correct number', () => {
+    const bytes = new Uint8Array([0, 0, 0, 0, 0, 0, 0, 1])
+    const tsid = TSID.fromBytes(bytes)
+    expect(tsid.number).toBe(BigInt(1))
+  })
+
+  test('TSID fromString should create a TSID with the correct number', () => {
+    const str = '0AWE5HZP3SKTK'
+    const tsid = TSID.fromString(str, 'S')
+    expect(tsid.number).toBe(18409564052552383455n)
   })
 
   describe('Property-based Testing', () => {
