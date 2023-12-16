@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 
 import { decode, encode } from '../src/utils'
 
-describe('encode Testing', () => {
+describe('Encode Testing', () => {
   test('Encode a positive bigint value with base 10', () => {
     const value = BigInt(1234567890)
     const base = 10
@@ -53,7 +53,7 @@ describe('encode Testing', () => {
   })
 })
 
-describe('decode Testing', () => {
+describe('Decode Testing', () => {
   test('Decode a positive string value with base 10', () => {
     const value = '1234567890'
     const base = 10
