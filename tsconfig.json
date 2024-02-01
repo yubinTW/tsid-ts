@@ -2,12 +2,11 @@
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist", "test"],
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
+    "module": "CommonJS",
+    "target": "ES5",
     "declaration": true,
     "outDir": "dist",
     "strict": true,
-    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "lib": ["es2017"]
   }
