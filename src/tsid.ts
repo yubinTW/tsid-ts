@@ -355,8 +355,9 @@ export class TSID {
         if (value.length !== TSID_CHARS_LENGTH) {
           throw new Error(`Invalid TSID string: (len=${value.length} chars, but expected ${TSID_CHARS_LENGTH})`)
         }
+        
         number = Array.from(value).reduce(
-          (acc, c, i) => acc + (BigInt(ALPHABET_VALUES[c.charCodeAt(0)]) << BigInt(60 - i * 5)),
+          (acc, c, i) => acc + (BigInt(ALPHABET.indexOf(c.toUpperCase())) << BigInt(5 * (TSID_CHARS_LENGTH - i - 1))),
           BigInt(0)
         )
         break

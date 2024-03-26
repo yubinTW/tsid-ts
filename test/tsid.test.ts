@@ -90,10 +90,29 @@ describe('TSID Testing', () => {
   })
 
   test('TSID fromString should create a TSID with the correct number', () => {
-    const str = '0AWE5HZP3SKTK'
+    const str = '0FG9Y986E7Y6M'
     const tsid = TSID.fromString(str, 'S')
-    expect(tsid.number).toBe(18409564052552383455n)
+    expect(tsid.number).toBe(558796316535421140n)
   })
+
+  test('TSID generated with constructor should be equal to the one generated with fromString', () => {
+    const str = '0FG9Y986E7Y6M'
+    const tsid1 = TSID.fromString(str, 'S')
+    const tsid2 = new TSID(tsid1.number)
+    expect(tsid1.number).toEqual(tsid2.number)
+    expect(tsid1.toBytes()).toEqual(tsid2.toBytes())
+    expect(tsid1.toString()).toEqual(tsid2.toString())
+  });
+
+  test('Random TSID should be compatible across types', () => {
+    const tsid1 = getTsid()
+    const tsid2 = TSID.fromBytes(tsid1.toBytes())
+    const tsid3 = TSID.fromString(tsid1.toString(), 'S')
+    const tsid4 = new TSID(tsid1.number)
+    expect(tsid1.number).toEqual(tsid2.number)
+    expect(tsid1.number).toEqual(tsid3.number)
+    expect(tsid1.number).toEqual(tsid4.number)
+  });
 
   describe('Property-based Testing', () => {
     test('For any size TSID array, first item should small than the second one', () => {
